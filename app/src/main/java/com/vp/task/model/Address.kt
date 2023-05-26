@@ -6,4 +6,4 @@ data class Address(
     val street: String,
     val suite: String,
     val zipcode: String
-)
+):java.io.Serializable

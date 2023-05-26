@@ -1,5 +1,7 @@
 package com.vp.task.model
 
+import java.io.Serializable
+
 data class UsersListItem(
     val address: Address,
     val company: Company,
@@ -9,4 +11,4 @@ data class UsersListItem(
     val phone: String,
     val username: String,
     val website: String
-)
+) : Serializable

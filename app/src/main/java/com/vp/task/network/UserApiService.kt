@@ -1,5 +1,6 @@
 package com.vp.task.network
 
+import com.vp.task.model.PostComments
 import com.vp.task.model.UserDetails
 import com.vp.task.model.UsersList
 import com.vp.task.model.UsersPosts
@@ -15,8 +16,8 @@ interface UserApiService {
     suspend fun getUserDetails(@Path("userid") id: String): Response<UserDetails>
 
     @GET("users/{userid}/posts")
-    fun getUserPosts(@Path("userid") id: String): Response<UsersPosts>
+    suspend fun getUserPosts(@Path("userid") id: String): Response<UsersPosts>
 
     @GET("/posts/{postsId}/comments")
-    fun getPostsComment(@Path("postsId") postsId: String): Response<UsersPosts>
+    suspend fun getPostComments(@Path("postsId") postsId: String): Response<PostComments>
 }

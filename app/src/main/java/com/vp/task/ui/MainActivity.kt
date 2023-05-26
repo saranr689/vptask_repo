@@ -5,18 +5,18 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.vp.task.R
+import com.vp.task.databinding.ActivityMainBinding
 import com.vp.task.viewmodel.UserMainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    lateinit var mainViewModel: UserMainViewModel
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        mainViewModel = ViewModelProvider(this)[UserMainViewModel::class.java]
-        mainViewModel.getUserListResponse()
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
     }
 
     override fun onResume() {
@@ -25,15 +25,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun fetchData() {
-        mainViewModel.getUserListResponse()
 
-        mainViewModel.response.observe(this){
-            val ul = it.data!!.iterator()
-            while (ul.hasNext())
-            {
-                Log.d("userList",ul.next().username)
-
-            }
-        }
     }
 }

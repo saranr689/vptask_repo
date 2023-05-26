@@ -5,4 +5,4 @@ data class UsersPostsItem(
     val id: Int,
     val title: String,
     val userId: Int
-)
+):java.io.Serializable

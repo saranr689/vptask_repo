@@ -1,6 +1,9 @@
 package com.vp.task.network
 
 import com.vp.task.Utlis
+import com.vp.task.ui.PostListAdapter
+import com.vp.task.ui.PostsCommentListAdapter
+import com.vp.task.ui.UsersListAdapter
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,7 +16,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object RetrofitService {
+object AppModule {
     @Singleton
     @Provides
     fun provideOkHttpClient(): OkHttpClient {
@@ -44,4 +47,13 @@ object RetrofitService {
     @Provides
     fun provideRetrofitService(retrofit: Retrofit): UserApiService =
         retrofit.create(UserApiService::class.java)
+
+    @Provides
+    fun provideRestaurantAdapter(): UsersListAdapter = UsersListAdapter()
+
+    @Provides
+    fun providePostListAdapter(): PostListAdapter = PostListAdapter()
+
+    @Provides
+    fun providePostComentListAdapter(): PostsCommentListAdapter = PostsCommentListAdapter()
 }

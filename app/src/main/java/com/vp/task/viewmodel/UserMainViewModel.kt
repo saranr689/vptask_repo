@@ -18,6 +18,7 @@ class UserMainViewModel @Inject constructor(
     private val _response: MutableLiveData<BaseNetworkCallResult<UsersList>> = MutableLiveData()
     val response: LiveData<BaseNetworkCallResult<UsersList>> = _response
     fun getUserListResponse() = viewModelScope.launch {
-        userRepository.getUserList().collect() { values -> _response.value = values }
+        userRepository.getUserList().collect() { values ->
+            _response.value = values }
     }
 }

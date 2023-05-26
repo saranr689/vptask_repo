@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".VPTaskApplication"
         android:allowBackup="true"
@@ -22,11 +23,20 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <activity
+            android:name=".UserDetailActivity"
+            android:exported="false"
+            android:label="@string/title_activity_user_detail"
+            android:theme="@style/Theme.Vptask.NoActionBar">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+
     </application>
 
 </manifest>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/first_fragment"
+        android:title="Home"
+        android:icon="@drawable/ic_baseline_home_24"/>
+
+    <item
+        android:id="@+id/second_fragment"
+        android:title="shorts"
+        android:icon="@drawable/ic_baseline_home_24"/>
+
+    <item
+        android:id="@+id/third_fragment"
+        android:title="subscribtion"
+        android:contentDescription="menu"
+        android:icon="@drawable/ic_baseline_home_24"/>
+
+    <item
+        android:id="@+id/fourth_fragment"
+        android:title="fav"
+        android:icon="@drawable/ic_baseline_home_24"/>
+
+</menu>
