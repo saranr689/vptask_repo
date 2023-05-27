@@ -1,9 +1,9 @@
 package com.vp.task.network
 
 import com.vp.task.Utlis
-import com.vp.task.ui.PostListAdapter
-import com.vp.task.ui.PostsCommentListAdapter
-import com.vp.task.ui.UsersListAdapter
+import com.vp.task.ui.adapter.PostListAdapter
+import com.vp.task.ui.adapter.PostsCommentListAdapter
+import com.vp.task.ui.adapter.UsersListAdapter
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -49,7 +49,7 @@ object AppModule {
         retrofit.create(UserApiService::class.java)
 
     @Provides
-    fun provideRestaurantAdapter(): UsersListAdapter = UsersListAdapter()
+    fun provideUsersListAdapter(): UsersListAdapter = UsersListAdapter()
 
     @Provides
     fun providePostListAdapter(): PostListAdapter = PostListAdapter()

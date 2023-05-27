@@ -1,9 +1,10 @@
-package com.vp.task
+package com.vp.task.ui.activity
 
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
+import com.vp.task.R
 import com.vp.task.databinding.ActivityUserDetailBinding
 import com.vp.task.model.UsersListItem
 import dagger.hilt.android.AndroidEntryPoint

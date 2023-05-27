@@ -1,4 +1,4 @@
-package com.vp.task.ui
+package com.vp.task.ui.adapter
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,16 +14,13 @@ class PostsCommentListAdapter() :
 
 
     var postComments: List<PostCommentsItem> = PostComments()
-    private var onItemClickListener: ((UsersListItem) -> Unit)? = null
 
     fun setCommentList(postComments: PostComments) {
         this.postComments = postComments
-        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostsListCommentViewHolder {
-        val binding =
-            CommentsListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = CommentsListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return PostsListCommentViewHolder(binding)
     }
 
@@ -36,16 +33,11 @@ class PostsCommentListAdapter() :
         return postComments.size
     }
 
-    fun setOnItemClickListener(listener: (UsersListItem) -> Unit) {
-        onItemClickListener = listener
-    }
-
     inner class PostsListCommentViewHolder(private val binding: CommentsListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(postCommentsItem: PostCommentsItem) {
             binding.tvComments.text = postCommentsItem.body
         }
-
     }
 
 }

@@ -1,4 +1,4 @@
-package com.vp.task
+package com.vp.task.ui.fragment
 
 import android.os.Bundle
 import android.util.Log
@@ -8,10 +8,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.vp.task.databinding.FragmentPostListBinding
 import com.vp.task.network.BaseNetworkCallResult
-import com.vp.task.ui.PostListAdapter
-import com.vp.task.ui.PostsCommentListAdapter
+import com.vp.task.ui.adapter.PostListAdapter
+import com.vp.task.ui.adapter.PostsCommentListAdapter
 import com.vp.task.viewmodel.UserPostsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -20,7 +21,7 @@ import javax.inject.Inject
  * A simple [Fragment] subclass as the second destination in the navigation.
  */
 @AndroidEntryPoint
-class UserPostsFragment : Fragment(), PostListAdapter.IcommentClickEvent {
+class UserPostsFragment : Fragment() {
 
     private lateinit var userId: String
     lateinit var userPostsViewModel: UserPostsViewModel
@@ -40,7 +41,6 @@ class UserPostsFragment : Fragment(), PostListAdapter.IcommentClickEvent {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         _binding = FragmentPostListBinding.inflate(inflater, container, false)
         return binding.root
 
@@ -52,8 +52,8 @@ class UserPostsFragment : Fragment(), PostListAdapter.IcommentClickEvent {
         Log.d("_D_userId", userId + " ")
         userPostsViewModel = ViewModelProvider(requireActivity())[UserPostsViewModel::class.java]
         userPostsViewModel.getUserPosts(userId)
-        initRecyclerView()
         fetchUsersPosts(userId)
+        initRecyclerView()
         doSwipetoRefresh()
     }
 
@@ -67,7 +67,7 @@ class UserPostsFragment : Fragment(), PostListAdapter.IcommentClickEvent {
         userPostsViewModel.getUserPosts(userId)
         userPostsViewModel.userPostResponse.observe(viewLifecycleOwner) {
             when (it) {
-                is BaseNetworkCallResult.Sucess -> {
+                is BaseNetworkCallResult.Success -> {
                     Log.d("_log_D", "SUCESS" + it.data.toString())
                     postListAdapter.setPostList(it.data!!)
                     _binding!!.swiperefresh.isRefreshing = false
@@ -76,20 +76,8 @@ class UserPostsFragment : Fragment(), PostListAdapter.IcommentClickEvent {
                     Log.d("_D_D", "ERROR" + it.message)
                     _binding!!.swiperefresh.isRefreshing = false
                 }
-            }
-        }
-
-        userPostsViewModel.userPostCommentsResponse.observe(viewLifecycleOwner)
-        {
-            when (it) {
-                is BaseNetworkCallResult.Sucess -> {
-                    Log.d("_log_D", "SUCESS" + it.data.toString())
-                    postsCommentListAdapter.setCommentList(it.data!!)
-
-                }
-                is BaseNetworkCallResult.Error -> {
-                    Log.d("_log_D", "ERROR" + it.data.toString())
-
+                is BaseNetworkCallResult.Loading -> {
+                    Log.d("_D_D", "Loading")
                 }
             }
         }
@@ -100,25 +88,39 @@ class UserPostsFragment : Fragment(), PostListAdapter.IcommentClickEvent {
             layoutManager = LinearLayoutManager(activity)
             adapter = postListAdapter
         }
-        postListAdapter.setOnItemClickListener {
-            userPostsViewModel.getPostComments(it.toString())
-        }
-
         postListAdapter.setOnCommemtClick { postId, commentRv ->
-            userPostsViewModel.getPostComments(postId)
-            commentRv.adapter = postsCommentListAdapter
-            commentRv.layoutManager = LinearLayoutManager(activity)
-            postsCommentListAdapter.notifyDataSetChanged()
+            fetchUsersPostsComments(postId, commentRv)
         }
 
+    }
+
+    private fun fetchUsersPostsComments(postId: String, commentRv: RecyclerView) {
+        userPostsViewModel.getPostComments(postId)
+        userPostsViewModel.userPostCommentsResponse.observe(viewLifecycleOwner)
+        {
+            when (it) {
+                is BaseNetworkCallResult.Success -> {
+                    Log.d("_log_D", "SUCESS" + it.data.toString())
+                    Log.d("_callcount", "count+")
+                    val postsCommentListAdapter = PostsCommentListAdapter()
+                    Log.d("_D", "posclistobj: " + postsCommentListAdapter.toString())
+                    commentRv.adapter = postsCommentListAdapter
+                    commentRv.layoutManager = LinearLayoutManager(activity)
+                    postsCommentListAdapter.setCommentList(it.data!!)
+                }
+                is BaseNetworkCallResult.Error -> {
+                    Log.d("_log_D", "ERROR" + it.data.toString())
+
+                }
+                is BaseNetworkCallResult.Loading -> {
+                    Log.d("log_d", "Loading")
+                }
+            }
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    override fun onCommentClickListner() {
-
     }
 }

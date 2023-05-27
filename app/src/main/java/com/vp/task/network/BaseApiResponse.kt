@@ -7,7 +7,7 @@ abstract class BaseApiResponse {
         try {
             val response = apiCall()
             if (response.isSuccessful) {
-                response.body()?.let { return BaseNetworkCallResult.Sucess(response.body()) }
+                response.body()?.let { return BaseNetworkCallResult.Success(response.body()) }
             }
             return error("${response.code()} ${response.message()}")
         } catch (e: Exception) {

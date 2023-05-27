@@ -6,7 +6,19 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.vp.task.ui.HomeFragment"
+        android:name="com.vp.task.ui.fragment.HomeFragment"
         android:label="HomeFragment" />
+    <fragment
+        android:id="@+id/shortsFragment"
+        android:name="com.vp.task.ui.fragment.ShortsFragment"
+        android:label="ShortsFragment" />
+    <fragment
+        android:id="@+id/subscribtionFragment"
+        android:name="com.vp.task.ui.fragment.SubscribtionFragment"
+        android:label="SubscribtionFragment" />
+    <fragment
+        android:id="@+id/favFragment"
+        android:name="com.vp.task.ui.fragment.FavFragment"
+        android:label="FavFragment" />
 
 </navigation>

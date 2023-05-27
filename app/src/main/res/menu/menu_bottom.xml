@@ -2,24 +2,24 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/first_fragment"
-        android:title="Home"
-        android:icon="@drawable/ic_baseline_home_24"/>
+        android:id="@id/homeFragment"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:title="Home" />
 
     <item
-        android:id="@+id/second_fragment"
-        android:title="shorts"
-        android:icon="@drawable/ic_baseline_home_24"/>
+        android:id="@id/shortsFragment"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:title="shorts" />
 
     <item
-        android:id="@+id/third_fragment"
-        android:title="subscribtion"
+        android:id="@id/subscribtionFragment"
         android:contentDescription="menu"
-        android:icon="@drawable/ic_baseline_home_24"/>
+        android:icon="@drawable/ic_baseline_home_24"
+        android:title="subscribtion" />
 
     <item
-        android:id="@+id/fourth_fragment"
-        android:title="fav"
-        android:icon="@drawable/ic_baseline_home_24"/>
+        android:id="@+id/favFragment"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:title="fav" />
 
 </menu>

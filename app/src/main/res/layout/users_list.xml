@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:padding="5dp"
+        app:cardBackgroundColor="@color/white"
         app:layout_constraintLeft_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -17,6 +18,7 @@
             android:id="@+id/tv_user_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            style="@style/largetext"
             android:padding="5dp" />
 
     </androidx.cardview.widget.CardView>

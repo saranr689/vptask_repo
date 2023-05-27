@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -16,7 +17,7 @@
         android:theme="@style/Theme.Vptask"
         tools:targetApi="31">
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,7 +29,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".UserDetailActivity"
+            android:name=".ui.activity.UserDetailActivity"
             android:exported="false"
             android:label="@string/title_activity_user_detail"
             android:theme="@style/Theme.Vptask.NoActionBar">

@@ -23,7 +23,7 @@
                     android:id="@+id/imgList"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_baseline_home_24"
+                    android:src="@drawable/ic_round_person_pin_24"
                     app:layout_constraintBottom_toBottomOf="@+id/tvPostTitle"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

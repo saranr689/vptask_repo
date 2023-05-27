@@ -1,4 +1,4 @@
-package com.vp.task.ui
+package com.vp.task.ui.adapter
 
 import android.util.Log
 import android.view.LayoutInflater
