@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -38,8 +39,7 @@ class UserPostsFragment : Fragment() {
     private val binding get() = _binding!!
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentPostListBinding.inflate(inflater, container, false)
         return binding.root
@@ -48,6 +48,7 @@ class UserPostsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as AppCompatActivity?)!!.supportActionBar!!.title = "MY POSTS"
         userId = arguments?.get("user_id") as String
         Log.d("_D_userId", userId + " ")
         userPostsViewModel = ViewModelProvider(requireActivity())[UserPostsViewModel::class.java]
@@ -68,19 +69,30 @@ class UserPostsFragment : Fragment() {
         userPostsViewModel.userPostResponse.observe(viewLifecycleOwner) {
             when (it) {
                 is BaseNetworkCallResult.Success -> {
+                    hideProgressBar()
                     Log.d("_log_D", "SUCESS" + it.data.toString())
                     postListAdapter.setPostList(it.data!!)
                     _binding!!.swiperefresh.isRefreshing = false
                 }
                 is BaseNetworkCallResult.Error -> {
-                    Log.d("_D_D", "ERROR" + it.message)
+                    hideProgressBar()
+                    Log.d("ERROR_D", "ERROR" + it.message)
                     _binding!!.swiperefresh.isRefreshing = false
                 }
                 is BaseNetworkCallResult.Loading -> {
+                    showProgressBar()
                     Log.d("_D_D", "Loading")
                 }
             }
         }
+    }
+
+    private fun hideProgressBar() {
+        binding.pbView.visibility = View.GONE
+    }
+
+    private fun showProgressBar() {
+        binding.pbView.visibility = View.VISIBLE
     }
 
     private fun initRecyclerView() {
@@ -96,23 +108,21 @@ class UserPostsFragment : Fragment() {
 
     private fun fetchUsersPostsComments(postId: String, commentRv: RecyclerView) {
         userPostsViewModel.getPostComments(postId)
-        userPostsViewModel.userPostCommentsResponse.observe(viewLifecycleOwner)
-        {
+        userPostsViewModel.userPostCommentsResponse.observe(viewLifecycleOwner) {
             when (it) {
                 is BaseNetworkCallResult.Success -> {
-                    Log.d("_log_D", "SUCESS" + it.data.toString())
-                    Log.d("_callcount", "count+")
+                    hideProgressBar()
                     val postsCommentListAdapter = PostsCommentListAdapter()
-                    Log.d("_D", "posclistobj: " + postsCommentListAdapter.toString())
                     commentRv.adapter = postsCommentListAdapter
                     commentRv.layoutManager = LinearLayoutManager(activity)
                     postsCommentListAdapter.setCommentList(it.data!!)
                 }
                 is BaseNetworkCallResult.Error -> {
+                    hideProgressBar()
                     Log.d("_log_D", "ERROR" + it.data.toString())
-
                 }
                 is BaseNetworkCallResult.Loading -> {
+                    showProgressBar()
                     Log.d("log_d", "Loading")
                 }
             }

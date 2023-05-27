@@ -31,8 +31,7 @@
         <activity
             android:name=".ui.activity.UserDetailActivity"
             android:exported="false"
-            android:label="@string/title_activity_user_detail"
-            android:theme="@style/Theme.Vptask.NoActionBar">
+            android:label="@string/title_activity_user_detail">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

@@ -37,6 +37,7 @@ class PostsCommentListAdapter() :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(postCommentsItem: PostCommentsItem) {
             binding.tvComments.text = postCommentsItem.body
+            binding.tvCommentsName.text = postCommentsItem.name
         }
     }
 
