@@ -19,7 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 /**
- * A simple [Fragment] subclass as the second destination in the navigation.
+ * A UserPostsFragment class to display user posts & Post comments.
  */
 @AndroidEntryPoint
 class UserPostsFragment : Fragment() {
@@ -34,8 +34,7 @@ class UserPostsFragment : Fragment() {
     @Inject
     lateinit var postsCommentListAdapter: PostsCommentListAdapter
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
+    // This variable used to bind the root view
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -58,19 +57,22 @@ class UserPostsFragment : Fragment() {
         doSwipetoRefresh()
     }
 
+    // the method do pull down refresh function
     private fun doSwipetoRefresh() {
         _binding!!.swiperefresh.setOnRefreshListener {
             fetchUsersPosts(userId)
         }
     }
 
+    /*This method fetch user post list and details
+    * @Param userid pass to api call to fetch user posts
+    * */
     private fun fetchUsersPosts(userId: String) {
         userPostsViewModel.getUserPosts(userId)
         userPostsViewModel.userPostResponse.observe(viewLifecycleOwner) {
             when (it) {
                 is BaseNetworkCallResult.Success -> {
                     hideProgressBar()
-                    Log.d("_log_D", "SUCESS" + it.data.toString())
                     postListAdapter.setPostList(it.data!!)
                     _binding!!.swiperefresh.isRefreshing = false
                 }
@@ -81,7 +83,6 @@ class UserPostsFragment : Fragment() {
                 }
                 is BaseNetworkCallResult.Loading -> {
                     showProgressBar()
-                    Log.d("_D_D", "Loading")
                 }
             }
         }
@@ -95,17 +96,25 @@ class UserPostsFragment : Fragment() {
         binding.pbView.visibility = View.VISIBLE
     }
 
+    /*initilaize recyclerview to user post lists*/
     private fun initRecyclerView() {
         binding.rvUserPosts.apply {
             layoutManager = LinearLayoutManager(activity)
             adapter = postListAdapter
         }
+
+        /*listner to pass user post comment lists
+        * @parm postId -> pass to api call to fetch user post comments
+        * @commentRV current post view recycler view to update comment list*/
         postListAdapter.setOnCommemtClick { postId, commentRv ->
             fetchUsersPostsComments(postId, commentRv)
         }
 
     }
 
+    /*This method fetch user post list and details
+      * @Param postId pass to api call to fetch comments for post
+      * */
     private fun fetchUsersPostsComments(postId: String, commentRv: RecyclerView) {
         userPostsViewModel.getPostComments(postId)
         userPostsViewModel.userPostCommentsResponse.observe(viewLifecycleOwner) {

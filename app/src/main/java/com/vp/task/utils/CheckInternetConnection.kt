@@ -1,4 +1,4 @@
-package com.vp.task
+package com.vp.task.utils
 
 import android.app.Application
 import android.content.Context

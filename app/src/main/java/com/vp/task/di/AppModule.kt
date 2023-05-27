@@ -1,6 +1,7 @@
-package com.vp.task.network
+package com.vp.task.di
 
-import com.vp.task.Utlis
+import com.vp.task.network.UserApiService
+import com.vp.task.utils.Utlis
 import com.vp.task.ui.adapter.PostListAdapter
 import com.vp.task.ui.adapter.PostsCommentListAdapter
 import com.vp.task.ui.adapter.UsersListAdapter

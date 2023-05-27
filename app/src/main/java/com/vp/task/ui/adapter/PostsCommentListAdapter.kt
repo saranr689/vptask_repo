@@ -8,13 +8,14 @@ import com.vp.task.databinding.CommentsListItemBinding
 import com.vp.task.model.PostComments
 import com.vp.task.model.PostCommentsItem
 import com.vp.task.model.UsersListItem
-
+/*The class used to display post comments item list */
 class PostsCommentListAdapter() :
     RecyclerView.Adapter<PostsCommentListAdapter.PostsListCommentViewHolder>() {
 
 
     var postComments: List<PostCommentsItem> = PostComments()
 
+    /*this method used to get post comments where its trigger onCommentclickevent of postlist adapter */
     fun setCommentList(postComments: PostComments) {
         this.postComments = postComments
     }

@@ -1,23 +1,22 @@
 package com.vp.task.ui.adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.vp.task.R
 import com.vp.task.databinding.PostItemListBinding
-import com.vp.task.model.PostComments
 import com.vp.task.model.UsersPosts
 import com.vp.task.model.UsersPostsItem
 
+/*The class PostListAdapter used to list out the users post items
+* updating selected post comments*/
 class PostListAdapter() : RecyclerView.Adapter<PostListAdapter.UserPostListListViewHolder>() {
 
-    var postComments: PostComments = PostComments()
     var userPost: List<UsersPostsItem> = UsersPosts()
     lateinit var context: Context
+    //this variable used to oncomment click view event updates
     private var onCommentClickEvent: ((String, RecyclerView) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserPostListListViewHolder {
@@ -32,14 +31,15 @@ class PostListAdapter() : RecyclerView.Adapter<PostListAdapter.UserPostListListV
     }
 
     override fun getItemCount(): Int {
-        Log.d("_log_size_D", userPost.count().toString())
         return userPost.size
     }
 
+    //this method helps to recive and set listner to intercat between adapter and userdetails fragment
     fun setOnCommemtClick(listener: (String, RecyclerView) -> Unit) {
         onCommentClickEvent = listener
     }
 
+    //this method used to update user post lists item
     fun setPostList(userPost: UsersPosts) {
         this.userPost = userPost
         notifyDataSetChanged()
@@ -51,10 +51,6 @@ class PostListAdapter() : RecyclerView.Adapter<PostListAdapter.UserPostListListV
             binding.tvPostTitle.text = userPostItem.title
             binding.tcPostBody.text = userPostItem.body
             binding.tvShowComments.setOnClickListener {
-//                val postsCommentListAdapter = PostsCommentListAdapter()
-//                binding.rvComments.adapter = postsCommentListAdapter
-//                binding.rvComments.layoutManager = LinearLayoutManager(context)
-//                postsCommentListAdapter.setCommentList(postComments)
                 if (binding.rvComments.isShown) {
                     binding.rvComments.visibility = View.GONE
                     binding.tvShowComments.text = context.getString(R.string.show_comments)

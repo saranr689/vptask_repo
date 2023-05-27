@@ -12,4 +12,5 @@
     <string name="view_post">View Post</string>
     <string name="show_comments">show Comments</string>
     <string name="hide">Hide Comments</string>
+    <string name="users_list">USERS LIST</string>
 </resources>

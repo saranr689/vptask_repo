@@ -7,13 +7,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.vp.task.databinding.UsersListBinding
 import com.vp.task.model.UsersList
 import com.vp.task.model.UsersListItem
-
+/*The class used to display user list and handling clickevent to navigate to userdetais screen*/
 class UsersListAdapter() : RecyclerView.Adapter<UsersListAdapter.UsersListViewHolder>() {
 
 
     var userList: List<UsersListItem> = UsersList()
     private var onItemClickListener: ((UsersListItem) -> Unit)? = null
 
+    //this method used to get and update userlist item
     fun setUserList(userList: UsersList) {
         this.userList = userList
         notifyDataSetChanged()
@@ -33,6 +34,7 @@ class UsersListAdapter() : RecyclerView.Adapter<UsersListAdapter.UsersListViewHo
         return userList.size
     }
 
+    //this method call from fragment with passing listner and return args with user selected item
     fun setOnItemClickListener(listener: (UsersListItem) -> Unit) {
         onItemClickListener = listener
     }

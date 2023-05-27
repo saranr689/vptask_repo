@@ -10,19 +10,20 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.vp.task.CheckInternetConnection
 import com.vp.task.R
 import com.vp.task.databinding.HomeFragmentBinding
 import com.vp.task.network.BaseNetworkCallResult
 import com.vp.task.ui.activity.UserDetailActivity
 import com.vp.task.ui.adapter.UsersListAdapter
+import com.vp.task.utils.CheckInternetConnection
 import com.vp.task.viewmodel.UserMainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+/*the class used to display user list
+**/
 @AndroidEntryPoint
 class HomeFragment() : Fragment() {
-    var _view: Int? = null
     private lateinit var binding: HomeFragmentBinding
     lateinit var mainViewModel: UserMainViewModel
 
@@ -41,6 +42,7 @@ class HomeFragment() : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding = HomeFragmentBinding.bind(view)
         mainViewModel = ViewModelProvider(requireActivity())[UserMainViewModel::class.java]
+        //checking internet connectivity if it's connected api call trigger to get users list else show no internet view
         val checkInternetConnection by lazy { CheckInternetConnection(requireActivity().application) }
         checkInternetConnection.observe(requireActivity()) {
             if (it) {
@@ -56,7 +58,9 @@ class HomeFragment() : Fragment() {
         }
 
     }
-
+    /*This method fetch userlist and details
+    * api call to fetch userslist
+    * */
     private fun fetchUsersList() {
         mainViewModel.getUserListResponse()
         mainViewModel.response.observe(viewLifecycleOwner) {
@@ -86,14 +90,14 @@ class HomeFragment() : Fragment() {
     private fun showProgressBar() {
         binding.pbView.visibility = View.VISIBLE
     }
-
+    /*initilaize recyclerview to user lists*/
     private fun initRecyclerView() {
         binding.rvUserslist.apply {
             layoutManager = LinearLayoutManager(activity)
             adapter = usersListAdapter
         }
+//        user list on item click passing user id to userdetailActivity class
         usersListAdapter.setOnItemClickListener {
-            Log.d("_D_itemclick", it.name)
             val intent = Intent(activity, UserDetailActivity::class.java)
             intent.putExtra("user_list", it as java.io.Serializable)
             startActivity(intent)

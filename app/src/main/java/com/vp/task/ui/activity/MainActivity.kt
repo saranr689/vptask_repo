@@ -1,15 +1,16 @@
 package com.vp.task.ui.activity
 
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import com.vp.task.CheckInternetConnection
 import com.vp.task.R
 import com.vp.task.databinding.ActivityMainBinding
+import com.vp.task.utils.CheckInternetConnection
 import dagger.hilt.android.AndroidEntryPoint
 
+/*the class used to set userlist-> home fragment
+* bottomnavigation controller*/
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -22,16 +23,7 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment_mainactivity) as NavHostFragment
         val navController = navHostFragment.navController
         binding.bottomNavigationView.setupWithNavController(navController)
-        supportActionBar!!.title = "USERS LIST"
-    }
-
-    fun showProgress() {
-        binding.pbView.visibility = View.VISIBLE
-    }
-
-    fun hideProgress() {
-        binding.pbView.visibility = View.GONE
-
+        supportActionBar!!.title = getString(R.string.users_list)
     }
 
     override fun onBackPressed() {
